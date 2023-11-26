@@ -40,7 +40,10 @@ RUN mkdir -p /root/.cargo \
 RUN rustup toolchain install stable
 
 # 克隆和编译 ZeroTier One
-RUN git clone --branch main https://ghproxy.markxu.online/https://github.com/zerotier/ZeroTierOne.git /app/ZeroTierOne \
+RUN curl https://codeload.github.com/zerotier/ZeroTierOne/tar.gz/refs/tags/1.12.2 --output /tmp/ZeroTierOne.tar.gz \
+    && tar fxz /tmp/ZeroTierOne.tar.gz \
+    && mv /app/ZeroTierOne-* /app/ZeroTierOne \
+    && rm -rf /tmp/ZeroTierOne.tar.gz \
     && cd /app/ZeroTierOne \
     && make ZT_SYMLINK=1 \
     && make install
